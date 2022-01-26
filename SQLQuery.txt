@@ -1,7 +1,7 @@
 --Creation of loginDetails
 
 CREATE TABLE loginDetails(
-	uID INTEGER,
+	uid INTEGER,
 	username TEXT UNIQUE NOT NULL,
 	fullname TEXT NOT NULL,
 	password TEXT NOT NULL,
