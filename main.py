@@ -1,9 +1,15 @@
 from datetime import datetime, timedelta
+from fileinput import filename
+import imp
+import os
+import shutil
 from typing import Optional
 
 from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import UploadFile
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
+from matplotlib import image
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
@@ -183,4 +189,47 @@ def create_user(user: schemas.loginDetailsCreate, db: Session = Depends(get_db))
 async def read_users_me(current_user: schemas.loginDetailsRead = Depends(get_current_active_user)):
     return current_user
     
+@app.post("/uploadfile")
+async def create_upload_file(file: UploadFile, current_user: schemas.loginDetailsRead = Depends(get_current_active_user)):
+    mydir = ("./userFiles/" + str(current_user.uid))
+    
+    checkFolder = os.path.isdir(mydir)
 
+    if(not checkFolder):
+        os.makedirs(mydir)
+
+    filePath = "./userFiles/" + str(current_user.uid)+ "/" + file.filename
+
+    file_exists = os.path.exists(filePath)
+    
+    if(not file_exists):
+        t = localSession().query(func.max(models.fileDetails.fileid)).scalar()
+
+        if t == None:
+            t = 0
+
+        t = int(t) + 1
+
+        #INSERTING INTO THE FILEDETAILS TABLE
+        db_user = models.fileDetails(fileid = int(t), filename = file.filename, filelink = filePath, links = 1)
+        
+        db = localSession()
+
+        db.add(db_user)
+        db.commit()
+
+
+        #INSERTING INTO THE FILEOWNER TABLE
+        db_user = models.fileOwner(ownerid = current_user.uid, fileid = int(t))
+        
+        db = localSession()
+
+        db.add(db_user)
+        db.commit()
+
+        with open(filePath, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        return {"filename" : file.filename}
+    else:
+        return HTTPException(status_code=400, detail="File already exists")
