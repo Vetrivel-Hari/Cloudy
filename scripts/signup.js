@@ -16,12 +16,16 @@ let app = new Vue({
     methods: {
         createAccount: function()
         {
-            //Check the constraints
-            if(isValidUsername())
+            this.usernameWarning = ""
+            this.fullnameWarning = ""
+            this.passwordWarning = ""
+            this.repasswordWarning = ""
+            
+            if(isValidUsername(this.username))
             {
-                if(isValidFullname())
+                if(isValidFullname(this.fullname))
                 {
-                    if(isValidPassword())
+                    if(isValidPassword(this.password))
                     {
                         if(this.password === this.rePassword)
                         {
@@ -63,7 +67,7 @@ let app = new Vue({
                     }
                     else
                     {
-                        this.repasswordWarning = "PASSWORD SHOULD HAVE ATLEAST 8 characters and 1 capital letter"
+                        this.passwordWarning = "PASSWORD SHOULD HAVE ATLEAST 8 characters and 1 capital letter"
                     }
                 }
                 else
@@ -81,17 +85,48 @@ let app = new Vue({
     }
 })
 
-function isValidUsername()
+function isValidUsername(s)
 {
-    return true
+    rx = /^([a-z]+$)/
+
+    if(s.length >= 5)
+    {
+        if(rx.test(s) == true)
+            return true
+        else
+            return false
+    }
+    else
+        return false
 }
 
-function isValidFullname()
-{
-    return true
+function isValidFullname(s)
+{   
+    rx = /^([a-zA-Z]+$)/
+
+    if(s.length >= 0)
+    {
+        if(rx.test(s) == true)
+            return true
+        else
+            return false
+    }
+    else
+        return false
 }
 
-function isValidPassword()
+function isValidPassword(s)
 {
-    return true
+    if(s.length >= 8)
+    {
+        for(let i=0; i<s.length; i++)
+        {
+            if("ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(s[i]))
+                return true
+        }
+
+        return false
+    }
+    else
+        return false
 }
