@@ -67,7 +67,7 @@ let app = new Vue({
             }
             else
             {
-                alert("USERNAME SHOULD BE IN LOWERCASE AND ATLEAST 5 characters long")
+                alert("USERNAME SHOULD BE IN LOWERCASE AND ATLEAST 5 characters long. Only LETTERS are allowed!")
             }
 
         }
