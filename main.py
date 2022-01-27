@@ -6,7 +6,7 @@ import shutil
 from typing import Optional
 
 from fastapi import Depends, FastAPI, HTTPException, status
-from fastapi import UploadFile
+from fastapi import UploadFile, File, Form
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from matplotlib import image
@@ -190,7 +190,7 @@ async def read_users_me(current_user: schemas.loginDetailsRead = Depends(get_cur
     return current_user
     
 @app.post("/uploadfile")
-async def create_upload_file(file: UploadFile, current_user: schemas.loginDetailsRead = Depends(get_current_active_user)):
+async def create_upload_file(file: UploadFile = File(...),current_user: schemas.loginDetailsRead = Depends(get_current_active_user)):
     mydir = ("./userFiles/" + str(current_user.uid))
     
     checkFolder = os.path.isdir(mydir)
@@ -202,6 +202,7 @@ async def create_upload_file(file: UploadFile, current_user: schemas.loginDetail
 
     file_exists = os.path.exists(filePath)
     
+    print("!!!!!!!!!!!!!!!!!"+filePath+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     if(not file_exists):
         t = localSession().query(func.max(models.fileDetails.fileid)).scalar()
 
@@ -233,3 +234,21 @@ async def create_upload_file(file: UploadFile, current_user: schemas.loginDetail
         return {"filename" : file.filename}
     else:
         return HTTPException(status_code=400, detail="File already exists")
+
+@app.get("/getfiles")
+async def getfiles(current_user: schemas.loginDetailsRead = Depends(get_current_active_user)):
+    t = localSession().query(models.fileOwner).filter(models.fileOwner.ownerid == current_user.uid).all()
+
+    l = []
+    for i in t:
+        l.append(i.fileid)
+
+    l = tuple(l)
+    
+    t = localSession().query(models.fileDetails).filter(models.fileDetails.fileid.in_(l)).all()
+    
+    d = {}
+    for i in t:
+        d[i.fileid] = i.filename
+
+    return d
