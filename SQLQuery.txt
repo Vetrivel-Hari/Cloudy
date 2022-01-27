@@ -1,0 +1,11 @@
+--Creation of loginDetails
+
+CREATE TABLE loginDetails(
+	uid INTEGER,
+	username TEXT UNIQUE NOT NULL,
+	fullname TEXT NOT NULL,
+	password TEXT NOT NULL,
+	disabled Boolean NOT NULL,
+
+	PRIMARY KEY(uID)
+)

@@ -1,0 +1,5 @@
+Login:
+    OAuth 2.0: https://fastapi.tiangolo.com/tutorial/security/
+
+SQL-Modeling in FastAPI:
+    https://fastapi.tiangolo.com/tutorial/sql-databases/

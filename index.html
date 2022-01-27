@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Cloudy</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital@1&display=swap" rel="stylesheet">
+
+    <style>
+        body{
+            margin: 0px;
+        }
+
+        #bodyContainer{
+            height: 100vh;
+            width: 100%;
+            margin: 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(180deg,#7D6CF1, #C298F9);
+        }
+
+        .title{
+            font-size: 80px;
+            margin-bottom: 60px;
+            margin-top: 0px;
+            font-family: 'PT Sans', sans-serif;
+        }
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 30px 50px 50px 50px;
+            border-radius: 1em;
+        }
+         
+        .inputText{
+            width: 220px;
+            height: 30px;
+            border-radius: 1em;
+            font-size: 18px;
+            font-style: italic;
+            text-align: center;
+            padding: 8px;
+            margin: 20px;
+            background-color: #E7E9EB;
+            border-color: #8071eb;
+            
+        }
+
+        a{
+            font-size: 18px;
+            font-style: italic;
+            text-align: center;
+            margin-top: 12px;
+            color: black;
+        }
+
+        a:hover{
+            font-size: 22px;
+        }
+
+        #form-login{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .submitButton{
+            background-color: #8071eb;
+            border-radius: 1em;
+            color: white;
+            padding: 10px;
+            width: 220px;
+            font-size: 18px;
+            margin-top: 12px;
+        }
+
+        .warningMessage{
+            font-size: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id = "bodyContainer">
+            <p class="title">Cloudy</p>
+            <div id = "app">
+            <div class="container">
+                <form id = "form-login">
+                    <input type="text" class = "inputText" name = "username" placeholder="Username" v-model="username">
+                    <br>
+                    <input type="password" class = "inputText" name = "password" placeholder="Password" v-model="password">
+                    <p v-if="usernameWarning != ''" class="warningMessage">{{usernameWarning}}</p>
+                    <a href = "./templates/signup.html">Create a New Account</a>
+                    <br>
+                    <button type="button" class = "submitButton" name = "submit" v-on:click="checkCredentials">LOG IN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../scripts/index.js"></script>
+</body>
+</html>
