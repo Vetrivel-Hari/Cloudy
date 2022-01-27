@@ -6,21 +6,11 @@ let app = new Vue({
         fullname: "",
         password: "",
         rePassword: "",
-
-        usernameWarning: "",
-        fullnameWarning: "",
-        passwordWarning: "",
-        repasswordWarning: "",
     },
 
     methods: {
         createAccount: function()
         {
-            this.usernameWarning = ""
-            this.fullnameWarning = ""
-            this.passwordWarning = ""
-            this.repasswordWarning = ""
-            
             if(isValidUsername(this.username))
             {
                 if(isValidFullname(this.fullname))
@@ -44,7 +34,7 @@ let app = new Vue({
                             .then((response) => {
                                 if(response.status == 400)
                                 {
-                                    this.usernameWarning = "Username already registered"
+                                    alert("Username already registered")
                                     throw 'Username already registered'
                                 }
                                 else
@@ -62,22 +52,22 @@ let app = new Vue({
                         }
                         else
                         {
-                            this.repasswordWarning = "BOTH THE PASSWORDS SHOULD MATCH"
+                            alert("BOTH THE PASSWORDS SHOULD MATCH")
                         }
                     }
                     else
                     {
-                        this.passwordWarning = "PASSWORD SHOULD HAVE ATLEAST 8 characters and 1 capital letter"
+                        alert("PASSWORD SHOULD HAVE ATLEAST 8 characters and 1 capital letter")
                     }
                 }
                 else
                 {
-                    this.fullnameWarning = "INVALID FULLNAME"
+                    alert("INVALID FULLNAME")
                 }
             }
             else
             {
-                this.usernameWarning = "USERNAME SHOULD BE IN LOWERCASE AND ATLEAST 5 characters long"
+                alert("USERNAME SHOULD BE IN LOWERCASE AND ATLEAST 5 characters long")
             }
 
         }
