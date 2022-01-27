@@ -62,7 +62,7 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-def get_user(userName: str):
+def get_user_create(userName: str):
     db_user = localSession().query(models.loginDetails).filter(models.loginDetails.username == userName).first()
 
     #print(type(db))
@@ -71,8 +71,18 @@ def get_user(userName: str):
         data = schemas.loginDetailsCreate(username=db_user.username, fullname=db_user.fullname, password=db_user.password)
         return data
 
+def get_user_read(userName: str):
+    db_user = localSession().query(models.loginDetails).filter(models.loginDetails.username == userName).first()
+
+    #print(type(db))
+    #Check - 1
+    if (db_user):
+        b =  False if (str(db_user.disabled) == "false") else True
+        data = schemas.loginDetailsRead(uid = int(db_user.uid),username=db_user.username, fullname=db_user.fullname, disabled=b)
+        return data
+
 def authenticate_user(username: str, password: str):
-    user = get_user(username)
+    user = get_user_create(username)
 
     if(not user):
         return False
@@ -114,7 +124,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     except JWTError:
         raise credentials_exception
 
-    user = get_user(username=token_data.username)
+    user = get_user_read(userName=token_data.username)
 
     if(user is None):
         raise credentials_exception
@@ -122,8 +132,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     return user
 
 async def get_current_active_user(current_user: schemas.loginDetailsRead = Depends(get_current_user)):
-    if(current_user.disabled):
-        raise HTTPException(status = 400, detail="Inactive User")
+    if(not current_user.disabled):
+        raise HTTPException(status_code = 400, detail="Inactive User")
 
     return current_user
 
@@ -169,8 +179,8 @@ def create_user(user: schemas.loginDetailsCreate, db: Session = Depends(get_db))
 
     return db_user
 
-@app.get("/users")
-def userasd():
-    return {"Username" : "Hello"}
+@app.get("/users/me", response_model=schemas.loginDetailsRead)
+async def read_users_me(current_user: schemas.loginDetailsRead = Depends(get_current_active_user)):
+    return current_user
     
 

@@ -98,9 +98,9 @@
             <div id = "app">
             <div class="container">
                 <form id = "form-login">
-                    <input type="text" class = "inputText" name = "username" placeholder="Username" v-model="username">
+                    <input type="text" class = "inputText" name = "username" placeholder="Username" v-model="username" required>
                     <br>
-                    <input type="password" class = "inputText" name = "password" placeholder="Password" v-model="password">
+                    <input type="password" class = "inputText" name = "password" placeholder="Password" v-model="password" required>
                     <p v-if="usernameWarning != ''" class="warningMessage">{{usernameWarning}}</p>
                     <a href = "./templates/signup.html">Create a New Account</a>
                     <br>
