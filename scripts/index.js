@@ -1,3 +1,5 @@
+let access_token = ""
+
 let app = new Vue({
     el: "#app",
     
@@ -30,7 +32,10 @@ let app = new Vue({
                     
                 })
                 .then((data) => {
-                    this.usernameWarning = data.access_token
+                    let c = "access_token=" + data.access_token
+                    document.cookie=c
+
+                    window.location.replace('http://127.0.0.1:5000/templates/homepage.html')
                     alert("LOGIN SUCCESS")
                 })
                 .catch((error) => {
