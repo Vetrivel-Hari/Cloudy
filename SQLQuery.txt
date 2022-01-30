@@ -9,3 +9,33 @@ CREATE TABLE loginDetails(
 
 	PRIMARY KEY(uID)
 )
+
+CREATE TABLE filedetails(
+	fileid INTEGER,
+	filename TEXT,
+	filelink TEXT,
+	links INTEGER,
+	
+	PRIMARY KEY(fileid)
+)
+
+CREATE TABLE fileowner(
+	ownerid INTEGER,
+	fileid INTEGER,
+	
+	PRIMARY KEY(ownerid, fileid),
+	FOREIGN KEY(ownerid) REFERENCES logindetails(uid) ON DELETE CASCADE,
+	FOREIGN KEY(fileid) REFERENCES filedetails(fileid) ON DELETE CASCADE
+)
+
+CREATE TABLE sharedfiles(
+	filefrom INTEGER,
+	fileto INTEGER,
+	fileid INTEGER,
+	filename TEXT,
+	
+	PRIMARY KEY(filefrom, fileto, fileid),
+	FOREIGN KEY(filefrom) REFERENCES logindetails(uid) ON DELETE CASCADE,
+	FOREIGN KEY(fileto) REFERENCES logindetails(uid) ON DELETE CASCADE,
+	FOREIGN KEY(fileid) REFERENCES filedetails(fileid) ON DELETE CASCADE
+)

@@ -10,7 +10,11 @@
 </head>
 <body>
     <div id = "app">
-        <p>{{username}}</p>
+        <form id="form-upload">
+            <input type="file" id = "filename">
+            <button type="button" v-on:click="fileUpload">UPLOAD</button>
+        </form>
+        <p>{{uploadWarning}}</p>
     </div>
 
     <script src="../scripts/homepage.js"></script>

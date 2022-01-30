@@ -13,7 +13,8 @@ const getCookie = (cookie_name) =>{
       el: "#app",
       data: {
            access_token: "",
-           username: ""
+           username: "",
+           uploadWarning: ""
       },
       
       created()
@@ -39,10 +40,49 @@ const getCookie = (cookie_name) =>{
             
           })
           .then((data) => {
-                this.username = data.uid
+                this.uploadWarning = ""
           })
           .catch((error) => {
               console.log(error)
           })
-      }
+        },
+        
+        methods:{
+          fileUpload: function() {
+              form = new FormData(document.getElementById("form-upload"))
+              this.access_token = getCookie("access_token")
+              let s = 'Bearer ' + this.access_token
+              
+              console.log(s)
+              
+              fetch('http://127.0.0.1:8000/uploadfile',
+              {
+                method: 'POST',
+                headers:
+                {
+                  'accept' : 'application/json',
+                  'Authorization' : s,
+                  'Content-Type': 'multipart/form-data'
+                },
+                body: form
+              })
+              .then((responce) => {
+                if(responce.status == 400)
+                {
+                  console.log(responce)
+                  this.uploadWarning = "FILE ALREADY EXISTS IN THE CLOUD"
+                  throw 'FILE ALREADY EXISTS IN THE CLOUD'
+                }
+                else
+                  return responce.json()   
+                })
+                .then((data) => {
+                  this.uploadWarning = data.filename
+                  alert("FILE UPLOADED SUCCESSFULLY")
+                })
+                .catch((error) => {
+                    console.error('Error: ', error)
+                })
+          }
+        }
   })
