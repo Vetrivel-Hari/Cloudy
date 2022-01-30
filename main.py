@@ -4,6 +4,7 @@ from fileinput import filename
 import imp
 from operator import mod
 import os
+import magic
 import shutil
 from typing import List, Optional
 from urllib.request import Request
@@ -429,6 +430,12 @@ def renameFile(fileid: int, current_user: schemas.loginDetailsRead = Depends(get
 
     return {"Details": "Success"}
 
+@app.get("/downloadfile", response_class=FileResponse)
+def downloadFile():
+    mime = magic.Magic(mime=True)
+    x = mime.from_file("./userFiles/1/Brochure.pdf")
+    
+    file_location = "./userFiles/1/Brochure.pdf"
 
-
+    return FileResponse(file_location, media_type=x,filename="Brochure")
 
