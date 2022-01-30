@@ -27,3 +27,15 @@ CREATE TABLE fileowner(
 	FOREIGN KEY(ownerid) REFERENCES logindetails(uid) ON DELETE CASCADE,
 	FOREIGN KEY(fileid) REFERENCES filedetails(fileid) ON DELETE CASCADE
 )
+
+CREATE TABLE sharedfiles(
+	filefrom INTEGER,
+	fileto INTEGER,
+	fileid INTEGER,
+	filename TEXT,
+	
+	PRIMARY KEY(filefrom, fileto, fileid),
+	FOREIGN KEY(filefrom) REFERENCES logindetails(uid) ON DELETE CASCADE,
+	FOREIGN KEY(fileto) REFERENCES logindetails(uid) ON DELETE CASCADE,
+	FOREIGN KEY(fileid) REFERENCES filedetails(fileid) ON DELETE CASCADE
+)

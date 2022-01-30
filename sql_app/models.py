@@ -1,3 +1,4 @@
+from fileinput import filename
 from os import link
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, null
 
@@ -25,3 +26,11 @@ class fileOwner(Base):
 
     ownerid = Column(Integer, ForeignKey('logindetails.uid'), primary_key=True)
     fileid = Column(Integer, ForeignKey('filedetails.fileid'), primary_key=True)
+
+class sharedFiles(Base):
+    __tablename__ = "sharedfiles"
+
+    filefrom = Column(Integer, ForeignKey('logindetails.uid'), primary_key=True)
+    fileto = Column(Integer, ForeignKey('logindetails.uid'), primary_key=True)
+    fileid = Column(Integer, ForeignKey('filedetails.fileid'), primary_key=True)
+    filename = Column(String)

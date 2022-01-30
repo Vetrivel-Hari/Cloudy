@@ -41,3 +41,15 @@ class fileOwner(BaseModel):
     class Config:
         orm_mode = True
 
+class renameFile(BaseModel):
+    fileid: int
+    filename: str
+
+class sharedFiles(BaseModel):
+    filefrom: int
+    fileto: int
+    fileid: int
+    
+    class Config:
+        orm_mode = True
+
