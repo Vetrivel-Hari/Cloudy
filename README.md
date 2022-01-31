@@ -14,9 +14,8 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    - I have used FASTAPI to develop the backend for this application
    - The API has various endpoints:
    
-   <p>
-    <img src="/images/API endpoints.png" width="100%" height="100%" />
-   </p>
+   <img src="/images/API endpoints.png" width="100%" height="100%" />
+   
    
    ```
    1) /token : Given the username and password returns the acess token if the credentials are valid
@@ -46,3 +45,7 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    # Database
    
    - I have used PostgreSQL for database
+   
+   <img src="/images/ERD.png" width="100%" height="100%" />
+  
+   - The above image is the ERD diagram for the database that I have created and used
