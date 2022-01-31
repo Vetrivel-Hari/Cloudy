@@ -8,3 +8,8 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    - I have implemented ***OAuth 2.0*** for User Authentication with the help of FASTAPI. Whenever the user tries to login he should provide his username and password. If the credentials given by the user is valid then the server will return a signed access token to the user. 
    - For all further requests to the API endpoints the user should attach the access token in the request header. 
    - As the access token in signed even if the user tries to manipulate the token the token will become invalid.
+
+#Implementation of the Blob Storage Server
+
+   - I have used FASTAPI to develop the backend for this application
+   - The API has various endpoints
