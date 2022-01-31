@@ -29,4 +29,13 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    8) /deletefile: Given a fileid the respective file will be deleted (The user can no longet access the file)
    9) /downloadfile: Given a fileid it returns the respective file as responce
    ```
+   # Client application (CLI)
    
+   - I have developed a CLI application for client side using python, with the help of the CLI the user can:
+     <br>      *1)signup, login*
+     <br>      *2) upload files*
+     <br>      *3) view the files that he has uploaded and the files shared with him*
+     <br>      *4) download files*
+     <br>      *5) share the files*
+     <br>      *6)rename the files*
+     <br>      *7)delete the files*
