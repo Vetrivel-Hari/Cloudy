@@ -9,7 +9,8 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    - For all further requests to the API endpoints the user should attach the access token in the request header. 
    - As the access token in signed even if the user tries to manipulate the token the token will become invalid.
 
-#Implementation of the Blob Storage Server
+# Implementation of the Blob Storage Server
 
    - I have used FASTAPI to develop the backend for this application
-   - The API has various endpoints
+   - The API has various endpoints:
+   ![This is an image](https://myoctocat.com/assets/images/base-octocat.svg)
