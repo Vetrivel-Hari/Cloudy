@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:admin@localhost:5432/Cloudy"
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(SQLALCHEMY_DATABASE_URL, pool_size = 100, max_overflow = 0)
 
 localSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
