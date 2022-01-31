@@ -1,6 +1,6 @@
---Creation of loginDetails
+--Creation of logindetails TABLE
 
-CREATE TABLE loginDetails(
+CREATE TABLE logindetails(
 	uid INTEGER,
 	username TEXT UNIQUE NOT NULL,
 	fullname TEXT NOT NULL,
@@ -10,6 +10,7 @@ CREATE TABLE loginDetails(
 	PRIMARY KEY(uID)
 )
 
+--Creation of filedetails TABLE
 CREATE TABLE filedetails(
 	fileid INTEGER,
 	filename TEXT,
@@ -19,6 +20,7 @@ CREATE TABLE filedetails(
 	PRIMARY KEY(fileid)
 )
 
+--Creation of fileowner TABLE
 CREATE TABLE fileowner(
 	ownerid INTEGER,
 	fileid INTEGER,
@@ -28,6 +30,7 @@ CREATE TABLE fileowner(
 	FOREIGN KEY(fileid) REFERENCES filedetails(fileid) ON DELETE CASCADE
 )
 
+--Creation of sharedfiles TABLE
 CREATE TABLE sharedfiles(
 	filefrom INTEGER,
 	fileto INTEGER,
