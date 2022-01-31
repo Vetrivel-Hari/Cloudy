@@ -271,7 +271,7 @@ def downloadFile(token):
     
     num = int(input("Enter the File Number that you want to DOWNLOAD: "))
     
-    if(num > c):
+    if(num >= c):
         printLines()
         print("INVALID FILE NUMBER!!!")
         printLines()
@@ -344,7 +344,7 @@ def shareFile(token):
     
     num = int(input("Enter the File Number that you want to SHARE: "))
     
-    if(num > c):
+    if(num >= c):
         printLines()
         print("INVALID FILE NUMBER!!!")
         printLines()
@@ -438,7 +438,7 @@ def renameFile(token):
     
     num = int(input("Enter the File Number that you want to RENAME: "))
     
-    if(num > c):
+    if(num >= c):
         printLines()
         print("INVALID FILE NUMBER!!!")
         printLines()
@@ -516,7 +516,7 @@ def deleteFile(token):
     
     num = int(input("Enter the File Number that you want to DELETE: "))
     
-    if(num > c):
+    if(num >= c):
         printLines()
         print("INVALID FILE NUMBER!!!")
         printLines()
