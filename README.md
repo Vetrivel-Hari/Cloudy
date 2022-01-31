@@ -49,3 +49,19 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    <img src="/images/ERD.png" width="100%" height="100%" />
   
    - The above image is the ERD diagram for the database that I have created and used
+
+   # How to run the application?
+   
+   - You need to create the database, Copy the sql commands from the file ***SQLQuery.txt*** and execute it in PostgreSQL
+      <br> Note: In /sql_app/database.py you need to change the value of the variable ***SQLALCHEMY_DATABASE_URL*** to point to your database
+   
+   - Open the terminal and install the required modules mentioned in the ***requirments.txt*** file.
+   
+   > pip install -r requirments.txt
+  
+   - Locate the folder ***Cloudy*** using the command line and run the command ***uvicorn main:app*** to start the server
+     <br> Note: main.py file contains the backend code (code for the API)
+          
+   - Open a new Terminal, Locate the folder ***Cloudy*** using the command line and run the command ***python app.py*** to start the CLI application
+     <br> Note: app.py file contains the bcode for API
+     <br> You can interact with the API using this CLI application
