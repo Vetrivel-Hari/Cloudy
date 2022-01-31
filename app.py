@@ -551,7 +551,17 @@ def deleteFile(token):
     homepage(token)
 
 def homepage(token):
-    printDesign("CLOUDY")
+    s = "Bearer " + token
+    headers = {
+        "accept": "application/json",
+        "Authorization": s,
+    }
+
+    r = requests.get('http://127.0.0.1:8000/users/me', headers=headers)
+
+    j = r.json()
+
+    printDesign("CLOUDY - " + str(j["fullname"]))
 
     print("1. UPLOAD A FILE")
     print("2. DISPLAY THE FILES STORED IN CLOUD")
