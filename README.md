@@ -14,4 +14,19 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    - I have used FASTAPI to develop the backend for this application
    - The API has various endpoints:
    
-   ![This is an image](/images/API endpoints.png)
+   <p>
+    <img src="/images/API endpoints.png" width="100%" height="100%" />
+   </p>
+   
+   ```
+   1) /token : Given the username and password returns the acess token if the credentials are valid
+   2) /signup: Given the username and password and fullname it creates an user account
+   3) /users/me: Provides the information about logged in user
+   4) /uploadfile: Given a file it uploads the file to the server which can only be accessed by the logged in user
+   5) /sharefiles: Given a fileid and the username the file gets shared to the respective user
+   6) /getfiles: It returns all the files that are accessible by the logged in user
+   7) /renamefile: Given a fileid and new name the respective file gets renamed
+   8) /deletefile: Given a fileid the respective file will be deleted (The user can no longet access the file)
+   9) /downloadfile: Given a fileid it returns the respective file as responce
+   ```
+   
