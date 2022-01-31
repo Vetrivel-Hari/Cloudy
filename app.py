@@ -1,4 +1,3 @@
-from importlib.metadata import files
 import os
 import requests
 import time
@@ -56,7 +55,7 @@ def login():
             }, headers=headers)
             
             j = r.json()
-            if(r.status_code == 401):
+            if(("status_code" in j.keys()) and (j["status_code"] == 400)):
                 printLines()
                 print(j["detail"])
                 printLines()
@@ -106,7 +105,7 @@ def signup():
                     r = requests.post('http://127.0.0.1:8000/signup', data=json.dumps(data), headers=headers)
 
                     j = r.json()
-                    if(j.status_code == 400):
+                    if(("status_code" in j.keys()) and (j["status_code"] == 400)):
                         printLines()
                         print(j["detail"])
                         printLines()
@@ -173,7 +172,7 @@ def uploadFile(token):
             printLines()
 
             time.sleep(2)
-            homepage()
+            homepage(token)
 
     else:
         printDesign("INVALID FILE PATH")
@@ -233,14 +232,322 @@ def displayFile(token):
 def downloadFile(token):
     printDesign("DOWNLOAD A FILE")
 
+    j = getTheFiles(token)
+
+    c = 1
+    d = {}
+
+    print("\n")
+    printLines()
+    print("\t\t\tYOUR FILES")
+    printLines()
+    
+    if(len(j["ownedfiles"]) > 0):
+        for i in j["ownedfiles"].keys():
+            print(str(c) + ". " + j["ownedfiles"][i])
+            d[c] = [i, j["ownedfiles"][i]]
+            c = c + 1 
+    else:
+        print("\t\t\tNONE")
+
+    printLines()
+
+    print("\n")
+    printLines()
+    print("\t\tFILES SHARED WITH YOU")
+    printLines()
+    
+    if(len(j["sharedfiles"]) > 0):
+        for i in j["sharedfiles"].keys():
+            print(str(c) + ". " + j["sharedfiles"][i])
+            d[c] = [i, j["sharedfiles"][i]]
+    else:
+        print("\t\t\tNONE")
+
+    printLines()
+
+    print("\n")
+    
+    num = int(input("Enter the File Number that you want to DOWNLOAD: "))
+    
+    if(num > c):
+        printLines()
+        print("INVALID FILE NUMBER!!!")
+        printLines()
+
+        time.sleep(2)
+        homepage(token)
+    
+    s = "Bearer " + token
+        
+    headers = {
+        "accept": "*/*",
+        "Authorization": s,
+    }
+
+    x = int(d[num][0])
+    url = 'http://127.0.0.1:8000/downloadfile'+"?filesid="+str(x)
+
+    r = requests.get(url, headers=headers)
+
+    fileName = str(r.headers.get('content-disposition'))
+    fileName = fileName[fileName.rindex(";")+12:-1]
+    
+    open("C:\\Users\\m_d_v\\Downloads\\"+fileName, "wb").write(r.content)
+
+    printLines()
+    print("FILE DOWNLOADED SUCCESSFULLY!!!")
+    printLines()
+
+    time.sleep(2)
+    homepage(token)
+
 def shareFile(token):
     printDesign("SHARE A FILE")
+
+    j = getTheFiles(token)
+
+    c = 1
+    d = {}
+
+    print("\n")
+    printLines()
+    print("\t\t\tYOUR FILES")
+    printLines()
+    
+    if(len(j["ownedfiles"]) > 0):
+        for i in j["ownedfiles"].keys():
+            print(str(c) + ". " + j["ownedfiles"][i])
+            d[c] = [i, j["ownedfiles"][i]]
+            c = c + 1 
+    else:
+        print("\t\t\tNONE")
+
+    printLines()
+
+    print("\n")
+    printLines()
+    print("\t\tFILES SHARED WITH YOU")
+    printLines()
+    
+    if(len(j["sharedfiles"]) > 0):
+        for i in j["sharedfiles"].keys():
+            print(str(c) + ". " + j["sharedfiles"][i])
+            d[c] = [i, j["sharedfiles"][i]]
+    else:
+        print("\t\t\tNONE")
+
+    printLines()
+
+    print("\n")
+    
+    num = int(input("Enter the File Number that you want to SHARE: "))
+    
+    if(num > c):
+        printLines()
+        print("INVALID FILE NUMBER!!!")
+        printLines()
+
+        time.sleep(2)
+        homepage(token)
+    
+    t = int(input("Enter the Number of People You Want to share this with: "))
+
+        
+    s = "Bearer " + token
+        
+    headers = {
+        "accept": "application/json",
+        "Authorization": s,
+    }
+
+    c = 1
+    for i in range(t):
+        print("\n")
+        name = input("Enter the username of Person-"+str(c)+": ")
+
+        x = int(d[num][0])
+        url = 'http://127.0.0.1:8000/sharefiles'+"?fileid="+str(x)+"&toUser="+str(name)
+  
+        r = requests.get(url, headers=headers)
+
+        j = r.json()
+    
+        if(("status_code" in j.keys()) and (j["status_code"] == 400)):
+            printLines()
+            print(j["detail"])
+            printLines()
+        elif(("status_code" in j.keys()) and (j["status_code"] == 401)):
+            printLines()
+            print(j["detail"])
+            printLines()
+        elif(("status_code" in j.keys()) and (j["status_code"] == 401)):
+            printLines()
+            print(j["detail"])
+            printLines()
+        else:
+            printLines()
+            print("FILE SHARED SUCCESSFULLY!!!")
+            printLines()
+
+        c = c + 1
+
+    time.sleep(2)
+    homepage(token)
+
 
 def renameFile(token):
     printDesign("RENAME A FILE")
 
+    j = getTheFiles(token)
+
+    c = 1
+    d = {}
+
+    print("\n")
+    printLines()
+    print("\t\t\tYOUR FILES")
+    printLines()
+    
+    if(len(j["ownedfiles"]) > 0):
+        for i in j["ownedfiles"].keys():
+            print(str(c) + ". " + j["ownedfiles"][i])
+            d[c] = [i, j["ownedfiles"][i]]
+            c = c + 1 
+    else:
+        print("\t\t\tNONE")
+
+    printLines()
+
+    print("\n")
+    printLines()
+    print("\t\tFILES SHARED WITH YOU")
+    printLines()
+    
+    if(len(j["sharedfiles"]) > 0):
+        for i in j["sharedfiles"].keys():
+            print(str(c) + ". " + j["sharedfiles"][i])
+            d[c] = [i, j["sharedfiles"][i]]
+    else:
+        print("\t\t\tNONE")
+
+    printLines()
+
+    print("\n")
+    
+    num = int(input("Enter the File Number that you want to RENAME: "))
+    
+    if(num > c):
+        printLines()
+        print("INVALID FILE NUMBER!!!")
+        printLines()
+
+        time.sleep(2)
+        homepage(token)
+    
+    newName = input("Enter the NEW NAME for the file: ")
+    
+    s = "Bearer " + token
+        
+    headers = {
+        "accept": "application/json",
+        "Authorization": s,
+    }
+
+    x = int(d[num][0])
+    url = 'http://127.0.0.1:8000/renamefile'+"?fileid="+str(x)+"&newName="+str(newName)
+
+    r = requests.get(url, headers=headers)
+
+    j = r.json()
+
+    if(("status_code" in j.keys()) and (j["status_code"] == 400)):
+        printLines()
+        print(j["detail"])
+        printLines()
+    else:
+        printLines()
+        print("FILE RENAMED SUCCESSFULLY!!!")
+        printLines()
+
+
+    time.sleep(2)
+    homepage(token)
+
 def deleteFile(token):
     printDesign("DELETE A FILE")
+
+    j = getTheFiles(token)
+
+    c = 1
+    d = {}
+
+    print("\n")
+    printLines()
+    print("\t\t\tYOUR FILES")
+    printLines()
+    
+    if(len(j["ownedfiles"]) > 0):
+        for i in j["ownedfiles"].keys():
+            print(str(c) + ". " + j["ownedfiles"][i])
+            d[c] = [i, j["ownedfiles"][i]]
+            c = c + 1 
+    else:
+        print("\t\t\tNONE")
+
+    printLines()
+
+    print("\n")
+    printLines()
+    print("\t\tFILES SHARED WITH YOU")
+    printLines()
+    
+    if(len(j["sharedfiles"]) > 0):
+        for i in j["sharedfiles"].keys():
+            print(str(c) + ". " + j["sharedfiles"][i])
+            d[c] = [i, j["sharedfiles"][i]]
+    else:
+        print("\t\t\tNONE")
+
+    printLines()
+
+    print("\n")
+    
+    num = int(input("Enter the File Number that you want to DELETE: "))
+    
+    if(num > c):
+        printLines()
+        print("INVALID FILE NUMBER!!!")
+        printLines()
+
+        time.sleep(2)
+        homepage(token)
+    
+    s = "Bearer " + token
+        
+    headers = {
+        "accept": "application/json",
+        "Authorization": s,
+    }
+
+    x = int(d[num][0])
+    url = 'http://127.0.0.1:8000/deletefile'+"?fileid="+str(x)
+
+    r = requests.get(url, headers=headers)
+
+    j = r.json()
+
+    if(("status_code" in j.keys()) and (j["status_code"] == 400)):
+        printLines()
+        print(j["detail"])
+        printLines()
+    else:
+        printLines()
+        print("FILE DELETED SUCCESSFULLY!!!")
+        printLines()
+
+    time.sleep(2)
+    homepage(token)
 
 def homepage(token):
     printDesign("CLOUDY")
@@ -251,7 +558,8 @@ def homepage(token):
     print("4. SHARE A FILE")
     print("5. RENAME A FILE")
     print("6. DELETE A FILE")
-    
+    print("7. EXIT")
+
     printLines()
 
     ch = int(input("\nEnter Your Choice: "))
@@ -268,6 +576,8 @@ def homepage(token):
         renameFile(token)
     elif(ch == 6):
         deleteFile(token)
+    elif(ch == 7):
+        quit()
     else:
         printLines()
         print("INVALID CHOICE!!!")
