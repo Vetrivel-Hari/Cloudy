@@ -37,5 +37,5 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
      <br>      *3) view the files that he has uploaded and the files shared with him*
      <br>      *4) download files*
      <br>      *5) share the files*
-     <br>      *6)rename the files*
-     <br>      *7)delete the files*
+     <br>      *6) rename the files*
+     <br>      *7) delete the files*
