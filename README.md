@@ -49,7 +49,11 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    <img src="/images/ERD.png" width="100%" height="100%" />
   
    - The above image is the ERD diagram for the database that I have created and used
-
+   - The files that the user uploads will be stored in the ***userFiles directory*** present in the server
+   - Inside the ***userFiles directory*** each user has his own ***individual directory***
+   
+   ### Sharing the files don't maintain a duplicate copy in the server. I have taken inspiration from the concept of ***hard-links*** in linux to implement the sharing functionality. 
+   
    # How to run the application?
    
    - You need to create the database, Copy the sql commands from the file ***SQLQuery.txt*** and execute it in PostgreSQL
