@@ -14,4 +14,4 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    - I have used FASTAPI to develop the backend for this application
    - The API has various endpoints:
    
-   ![This is an image](./images/API endpoints.png)
+   ![This is an image](/images/API endpoints.png)
