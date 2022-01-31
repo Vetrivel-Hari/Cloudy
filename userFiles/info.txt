@@ -1,0 +1,2 @@
+-> This Folder stores all the files of the Users
+-> Each user has his own separate directory
