@@ -25,7 +25,7 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
    5) /sharefiles: Given a fileid and the username the file gets shared to the respective user
    6) /getfiles: It returns all the files that are accessible by the logged in user
    7) /renamefile: Given a fileid and new name the respective file gets renamed
-   8) /deletefile: Given a fileid the respective file will be deleted (The user can no longet access the file)
+   8) /deletefile: Given a fileid the respective file will be deleted (The user can no longer access the file)
    9) /downloadfile: Given a fileid it returns the respective file as responce
    ```
    # Client application (CLI)
@@ -63,7 +63,7 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
      <br> Note: main.py file contains the backend code (code for the API)
           
    - Open a new Terminal, Locate the folder ***Cloudy*** using the command line and run the command ***python app.py*** to start the CLI application
-     <br> Note: app.py file contains the bcode for API
+     <br> Note: app.py file contains the code for CLI application
      <br> You can interact with the API using this CLI application
      
    # Reference
