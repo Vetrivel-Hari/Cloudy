@@ -1,21 +1,14 @@
 from datetime import datetime, timedelta
-from distutils import extension
-from fileinput import filename
-import imp
-from operator import mod
 import os
+from isort import file
 import magic
 import shutil
 from typing import List, Optional
-from urllib.request import Request
 
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi import UploadFile, File, Form
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from isort import file
 from jose import JWTError, jwt
-from matplotlib import image
-from numpy import delete
 from passlib.context import CryptContext
 from pydantic import BaseModel, FilePath
 from starlette.responses import FileResponse
@@ -280,7 +273,17 @@ def shareFiles(fileid: int, toUser: str, current_user: schemas.loginDetailsRead 
             fileto = int(t.uid)
             filefrom = int(current_user.uid)
             
-            x = getFilesofReciver(fileto)
+            t = localSession().query(models.fileOwner).filter(models.fileOwner.ownerid == fileto).all()
+
+            x = []
+            for i in t:
+                x.append(int(i.fileid))
+
+            t = localSession().query(models.sharedFiles).filter(models.sharedFiles.fileto == fileto).all()
+    
+            for i in t:
+                x.append(int(i.fileid))
+            
             if(fileid not in x):
                 t = db.query(models.fileDetails).filter(models.fileDetails.fileid == fileid).first()
                 t.links = t.links + 1
@@ -378,7 +381,7 @@ def renameFile(fileid: int, newName: str, current_user: schemas.loginDetailsRead
                 i.filename = newName + extension
 
         db.commit()
-        return {"Details": "Success"}
+        return {"detail": "FILE RENAMED SUCCESSFULLY!!!"}
     else:
          return HTTPException(status_code=400, detail="You don't have access to that file")
 
@@ -431,11 +434,25 @@ def renameFile(fileid: int, current_user: schemas.loginDetailsRead = Depends(get
     return {"Details": "Success"}
 
 @app.get("/downloadfile", response_class=FileResponse)
-def downloadFile():
+def downloadFile(filesid: int, current_user: schemas.loginDetailsRead = Depends(get_current_active_user)):
     mime = magic.Magic(mime=True)
-    x = mime.from_file("./userFiles/1/Brochure.pdf")
+
+    t = localSession().query(models.fileOwner).filter(models.fileOwner.ownerid == current_user.uid).all()
+
+    l = []
+    for i in t:
+        l.append(int(i.fileid))
+
+    t = localSession().query(models.sharedFiles).filter(models.sharedFiles.fileto == current_user.uid).all()
     
-    file_location = "./userFiles/1/Brochure.pdf"
+    for i in t:
+        l.append(int(i.fileid))
 
-    return FileResponse(file_location, media_type=x,filename="Brochure")
+    if(filesid in l):
+        t = localSession().query(models.fileDetails).filter(models.fileDetails.fileid == filesid).first()
+        s = str(t.filelink)
+        x = mime.from_file(s)
+    
+        file_location = s
 
+        return FileResponse(file_location, media_type=x,filename=str(t.filename))

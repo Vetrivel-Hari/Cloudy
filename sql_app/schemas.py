@@ -49,6 +49,7 @@ class sharedFiles(BaseModel):
     filefrom: int
     fileto: int
     fileid: int
+    filename: str
     
     class Config:
         orm_mode = True

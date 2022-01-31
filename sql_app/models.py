@@ -1,5 +1,3 @@
-from fileinput import filename
-from os import link
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, null
 
 from .database import Base
