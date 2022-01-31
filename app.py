@@ -219,6 +219,7 @@ def displayFile(token):
     if(len(j["sharedfiles"]) > 0):
         for i in j["sharedfiles"].keys():
             print(str(c) + ". " + j["sharedfiles"][i])
+            c = c + 1
     else:
         print("\t\t\tNONE")
 
@@ -262,6 +263,7 @@ def downloadFile(token):
         for i in j["sharedfiles"].keys():
             print(str(c) + ". " + j["sharedfiles"][i])
             d[c] = [i, j["sharedfiles"][i]]
+            c = c + 1
     else:
         print("\t\t\tNONE")
 
@@ -335,6 +337,7 @@ def shareFile(token):
         for i in j["sharedfiles"].keys():
             print(str(c) + ". " + j["sharedfiles"][i])
             d[c] = [i, j["sharedfiles"][i]]
+            c = c + 1
     else:
         print("\t\t\tNONE")
 
@@ -429,6 +432,7 @@ def renameFile(token):
         for i in j["sharedfiles"].keys():
             print(str(c) + ". " + j["sharedfiles"][i])
             d[c] = [i, j["sharedfiles"][i]]
+            c = c + 1
     else:
         print("\t\t\tNONE")
 
@@ -507,6 +511,7 @@ def deleteFile(token):
         for i in j["sharedfiles"].keys():
             print(str(c) + ". " + j["sharedfiles"][i])
             d[c] = [i, j["sharedfiles"][i]]
+            c = c + 1
     else:
         print("\t\t\tNONE")
 
