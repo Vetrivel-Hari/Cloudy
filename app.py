@@ -115,7 +115,7 @@ def signup():
                         printLines()
 
                         time.sleep(1.5)
-                        login()
+                        main()
 
                 else:
                     printLines()
@@ -142,9 +142,8 @@ def uploadFile(token):
 
     filePath = input("ENTER THE PATH OF THE FILE THAT YOU WANT TO UPLOAD: ")
 
-    fileName = filePath[filePath.rindex("\\")+1:]
-
     if(os.path.exists(filePath)):
+        fileName = filePath[filePath.rindex("\\")+1:]
         mime = magic.Magic(mime=True)
         x = mime.from_file(filePath)
 
@@ -175,7 +174,9 @@ def uploadFile(token):
             homepage(token)
 
     else:
-        printDesign("INVALID FILE PATH")
+        printLines()
+        print("\tINVALID FILE PATH")
+        printLines()
 
 def getTheFiles(token):
     s = "Bearer " + token
