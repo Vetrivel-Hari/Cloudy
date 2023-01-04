@@ -5,7 +5,7 @@ Problem Description: https://docs.google.com/document/d/11e6VnFdfBYa1i6SA8CIAuIF
 
 # User Authentication:
    
-   - I have implemented ***OAuth 2.0*** for User Authentication with the help of FASTAPI. Whenever the user tries to login he should provide his username and password. If the credentials given by the user is valid then the server will return a signed access token to the user. 
+   - I have implemented ***JWT*** for User Authentication with the help of FASTAPI. Whenever the user tries to login he should provide his username and password. If the credentials given by the user is valid then the server will return a signed access token to the user. 
    - For all further requests to the API endpoints the user should attach the access token in the request header. 
    - As the access token in signed even if the user tries to manipulate the token the token will become invalid.
    - The passwords are stored in hashed format in the database so even if someone gets access to that it would be difficult to retrive the original password.
